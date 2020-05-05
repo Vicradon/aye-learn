@@ -1,15 +1,14 @@
 const { Router } = require("express");
 const userController = require("../controllers/user");
+const { withJWTAuthMiddleware } = require("express-kun");
 const router = Router();
-const createProtectedRouter = require('../helpers/createProtectedRouter')
 
-const protectedRouter = createProtectedRouter();
-router.get('/stuff', (req, res) => {
-  res.send("hello")
-})
+const protectedRouter = withJWTAuthMiddleware(router, "yourSecretKey");
+
+
 router.post("/", userController.create);
-
 protectedRouter.get("/", userController.getAll);
+router.post("/login", userController.login);
 protectedRouter.get("/:id", userController.get);
 
-module.exports = { router, protectedRouter };
+module.exports = router;
