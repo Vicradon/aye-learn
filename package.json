@@ -13,7 +13,10 @@
   "author": "Chukwujama Osinachi",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "express": "^4.17.1",
+    "express-kun": "^1.0.24",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10"
   },
   "devDependencies": {
