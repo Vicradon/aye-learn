@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const app = express();
 const userRouter = require("./routes/user");
 
-mongoose.connect("mongodb://localhost/exampledb", { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-  console.log("success connect db");
+mongoose.connect("mongodb://localhost/ota", { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+  console.log("connected to mongo");
 });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

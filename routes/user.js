@@ -6,6 +6,8 @@ const router = Router();
 const protectedRouter = withJWTAuthMiddleware(router, "yourSecretKey");
 
 
+
+
 router.post("/", userController.create);
 protectedRouter.get("/", userController.getAll);
 router.post("/login", userController.login);
