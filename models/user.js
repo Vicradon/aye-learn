@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-function setPassword(value) {
+const setPassword = (value) => {
   return bcrypt.hashSync(value, 10);
 }
 
@@ -14,9 +14,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     set: setPassword
+  },
+  role: {
+    type: String,
+    default: 'student',
+    enum: ['student', 'tutor', 'admin']
+  },
+  accessToken: {
+    type: String
   }
 });
 
-const model = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
-module.exports = model;
+module.exports = User;
