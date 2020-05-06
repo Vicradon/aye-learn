@@ -22,17 +22,17 @@ const getSubjectById = async (req, res, next) => {
  * @param {*} req 
  * @param {*} res 
  */
-const create = async (req, res) => {
+const createCategory = async (req, res) => {
   try {
-    const { category, subject } = req.params
-    const newSubject = await Subject.create({
-      category,
-      subject
-    })
-    res.json({
-      newSubject,
-      message: `Subject created under category ${category}`
-    });
+    // const { category, subject } = req.params
+    // const newSubject = await Subject.create({
+    //   category,
+    //   subject
+    // })
+    // res.json({
+    //   newSubject,
+    //   message: `Subject created under category ${category}`
+    // });
   } catch (error) {
     res.json({
       message: error.message
@@ -45,7 +45,7 @@ const create = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const updateSubject = async (req, res) => {
+const updateCategory = async (req, res) => {
   try {
     const { category, id } = req.params
     const subject = await getSubjectById(req, res)
@@ -68,18 +68,6 @@ const deleteSubject = async (req, res) => {
   }
 }
 
-/**
- * Updates a given category
- * @param {*} req 
- * @param {*} res 
- */
-const updateCategory = async (req, res) => {
-  try {
-
-  } catch (error) {
-
-  }
-}
 
 /**
  * Deletes a given category
@@ -98,5 +86,7 @@ const deleteCategory = async (req, res) => {
 
 
 module.exports = {
-  create
+  createCategory,
+  updateCategory,
+  deleteCategory
 };

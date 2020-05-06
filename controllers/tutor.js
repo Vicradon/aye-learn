@@ -1,6 +1,6 @@
 const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
 
-const getAll = async (req, res) => {
+const getAllTutors = async (req, res) => {
   try {
     const user = await User.find({});
     res.json({
@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
   }
 }
 
-const get = async (req, res) => {
+const getTutor = async (req, res) => {
   try {
     const user = await User.findOne({
       _id: req.params.id,
@@ -30,4 +30,53 @@ const get = async (req, res) => {
       message: e.message
     })
   }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const removeTutorRights = async (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const registerSubject = async (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getSubjects = async (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+
+
+module.exports = {
+  getAllTutors,
+  getTutor,
+  removeTutorRights,
+  registerSubject,
+  getSubjects
 }
