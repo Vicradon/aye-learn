@@ -2,67 +2,71 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-async function create(req, res) {
-  const { email, password } = req.body;
 
-  const user = await User.create({
-    email,
-    password
-  });
+const signup = async (req, res) => {
+  try {
+    const { email, password, role } = req.body;
 
-  res.json({
-    user,
-    message: "create user successfully"
-  });
-}
-
-async function login(req, res) {
-  const { email, password } = req.body;
-  const user = await User.findOne({
-    email
-  });
-
-  if (!user) {
-    throw Error("User not found");
-  }
-  if (bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign({ user }, "yourSecretKey", {
-      expiresIn: "24h"
+    const user = await User.create({
+      email,
+      password,
+      role
     });
+
+    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+      expiresIn: "1d"
+    });
+    user.token = token
+    await user.save()
 
     res.json({
       user,
-      token,
-      message: "create user successfully"
+      message: "Signed up successfully"
     });
-  } else {
-    res.status(401).json({
-      message: "Unauthenticated"
-    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+    next(error)
   }
 }
 
-async function getAll(req, res) {
-  const user = await User.find({});
-  res.json({
-    user,
-    message: "create user successfully"
-  });
-}
 
-async function get(req, res) {
-  const user = await User.findOne({
-    _id: req.params.id
-  });
-  res.json({
-    user,
-    message: "create user successfully"
-  });
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({
+      email
+    });
+
+    if (!user) {
+      res.status(401).json({
+        message: "User not found"
+      });
+      throw new Error("User not found");
+    }
+    if (bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+        expiresIn: "1d"
+      });
+      await User.findByIdAndUpdate(user._id, { token })
+      res.status(200).json({
+        user,
+        message: "logged in successfully"
+      });
+    } else {
+      res.status(401).json({
+        message: "Password incorrect"
+      });
+    }
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
 }
 
 module.exports = {
-  create,
-  login,
-  get,
-  getAll,
+  signup,
+  login
 };
