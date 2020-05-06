@@ -4,8 +4,9 @@ const app = express();
 const userRouter = require("./routes/users");
 const categoryRouter = require("./routes/categories");
 const tokenHasExpired = require("./middleware/tokenHasExpired")
+require("dotenv").config()
 
-mongoose.connect("mongodb://localhost/ota", {
+mongoose.connect("mongodb://localhost/aye-learn", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -19,6 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRouter);
 app.use("/categories", categoryRouter);
 
-app.listen(8000, () => {
-  console.log("Server running on http://localhost:8000");
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });

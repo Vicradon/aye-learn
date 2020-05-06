@@ -4,10 +4,6 @@ const SubjectSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-  },
-  class: {
-    type: Stirng,
-    required: true
   }
 })
 
