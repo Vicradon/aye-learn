@@ -25,7 +25,7 @@ router.get('/',
  * Get single lesson
  */
 router.get('/:id',
-  hasAccessTo('createAny', 'lesson'),
+  hasAccessTo('readAny', 'lesson'),
   lessonController.getLesson
 )
 

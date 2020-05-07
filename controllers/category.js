@@ -9,23 +9,19 @@ const updateCategory = async (req, res) => {
   try {
     const { id } = req.params
     const { newName, newSubjects } = req.body
-    const exists = Category.findById(id)
 
-    if (!exists) {
-      throw new Error("The provided id doesn't map to a category")
+    let prevSubjects = await Category.findById(id).subjects
+
+    if (!prevSubjects){
+      prevSubjects = []
     }
-    const prevSubjects = await Category.findById(id, { projection: { subject: 1, _id: 0 } }).toArray((err, items) => {
-      if (err) throw new Error("An error occured")
-    });
 
     await Category.findByIdAndUpdate(id, { name: newName, subjects: [...prevSubjects, newSubjects] }, (err) => {
-      if (err) throw new Error("An error occured")
+      if (err) throw new Error(err)
+      res.status(201).json({
+        message: "Successfully modified the category"
+      })
     })
-
-    res.status(201).json({
-      message: "Successfully created the subject"
-    })
-
   } catch (error) {
     res.json({
       message: error.message
@@ -43,14 +39,11 @@ const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params
 
-    const category = Category.findByIdAndDelete(id, (err) => {
+    await Category.findByIdAndDelete(id, (err) => {
       if (err) throw new Error(err)
-    })
-    if (!category) {
-      throw new Error("No such category exists")
-    }
-    res.json({
-      message: "successfully deleted category"
+      res.json({
+        message: "successfully deleted category"
+      })
     })
   } catch (error) {
     res.json({

@@ -7,22 +7,22 @@ const Lesson = require('../models/lesson')
 const createLesson = async (req, res) => {
   try {
     const { name } = req.body
-    let exist 
+    let exist
     await Lesson.findOne({ name }, (err, data) => {
       if (err) throw new Error(err)
       exists = data
     })
-    
+
     if (exists) {
       throw new Error("This lesson name is already available, chose another and try again")
     }
     const lesson = new Lesson({ name: name })
-    await lesson.save((err) => {
+    await lesson.save((err, lessonData) => {
       if (err) throw new Error(err)
-    })
-
-    res.status(201).json({
-      message: "Successfully created the lesson"
+      res.status(201).json({
+        lessonData,
+        message: "Successfully created the lesson"
+      })
     })
   } catch (error) {
     res.json({
@@ -39,16 +39,13 @@ const createLesson = async (req, res) => {
 const updateLesson = async (req, res) => {
   try {
     const { id } = req.params
-    const { newName } = req.body
+    const newDetails = req.body
 
-    const lesson = Lesson.findByIdAndUpdate(id, { name: newName }, (err) => {
+    await Lesson.findByIdAndUpdate(id, { ...newDetails }, (err) => {
+      res.json({
+        message: "Lesson updated successfully"
+      })
       if (err) throw new Error(err)
-    })
-    if (!lesson) {
-      throw new Error("No such lesson exists")
-    }
-    res.json({
-      message: "Lesson updated successfully"
     })
   } catch (error) {
     res.json({
@@ -65,13 +62,13 @@ const updateLesson = async (req, res) => {
  */
 const getAllLessons = async (req, res) => {
   try {
-    const lessons = Lesson.find({}).toArray((err, lessons) => {
+    await Lesson.find({}, (err, lessons) => {
       if (err) throw new Error(err);
+      res.json({
+        lessons,
+        message: "All lessons"
+      })
     });
-    res.json({
-      lessons,
-      message: "All lessons"
-    })
   } catch (error) {
     res.json({
       message: error.message
@@ -87,13 +84,13 @@ const getAllLessons = async (req, res) => {
 const getLesson = async (req, res) => {
   try {
     const { id } = req.params
-    const lesson = Lesson.findById(id, (err, items) => {
+    await Lesson.findById(id, (err, lesson) => {
       if (err) throw new Error(err);
+      res.json({
+        lesson,
+        message: "Lesson"
+      })
     });
-    res.json({
-      lesson,
-      message: "Lesson"
-    })
   } catch (error) {
     res.json({
       message: error.message
@@ -114,10 +111,9 @@ const deleteLesson = async (req, res) => {
 
     await Lesson.findByIdAndDelete(id, (err) => {
       if (err) throw new Error(err)
-    })
-
-    res.json({
-      message: "successfully deleted the lesson"
+      res.json({
+        message: "successfully deleted the lesson"
+      })
     })
   } catch (error) {
     res.json({

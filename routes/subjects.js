@@ -4,7 +4,17 @@ const router = Router();
 const hasAccessTo = require('../controllers/utils/hasAccessTo')
 
 
-router.post("/create/:name",
+router.get("/",
+  hasAccessTo('readAny', 'subject'),
+  subjectController.getAllSubjects
+);
+
+router.get("/:id",
+  hasAccessTo('readAny', 'subject'),
+  subjectController.getSubject
+);
+
+router.post("/new",
   hasAccessTo('createAny', 'subject'),
   subjectController.createSubject
 );

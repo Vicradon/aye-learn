@@ -6,18 +6,25 @@ const Subject = require('../models/subject')
  */
 const createSubject = async (req, res) => {
   try {
-    const name = req.params.name
-    const alreadyExist = Subject.findOne({ name })
-    if (alreadyExist) {
-      throw new Error("This subject name is already available")
-    }
-    const subject = new Subject({ name })
-    await subject.save()
-
-    res.status(201).json({
-      message: "Successfully created the subject"
+    const { name, category } = req.body
+    let exists
+    await Subject.findOne({ name, category }, (err, data) => {
+      if (err) throw new Error(err)
+      exists = data
     })
 
+    if (exists) {
+      throw new Error("This subject name is already available")
+    }
+    const subject = new Subject({ name, category })
+
+    await subject.save((err) => {
+      if (err) throw new Error(err)
+      res.status(201).json({
+        subject,
+        message: "Successfully created the subject"
+      })
+    })
   } catch (error) {
     res.json({
       message: error.message
@@ -33,19 +40,18 @@ const createSubject = async (req, res) => {
 const updateSubject = async (req, res) => {
   try {
     const { id } = req.params
-    const { newName } = req.body
+    // const { newName } = req.body
 
-    const subject = Subject.findByIdAndUpdate(id, { name: newName }, (err) => {
+    await Subject.findByIdAndUpdate(id, { ...req.body }, (err, subject) => {
       if (err) throw new Error(err)
-    })
-    if (!subject) {
-      throw new Error("No such subject exists")
-    }
-    res.json({
-      message: "Subject updated successfully"
+      res.json({
+        id: subject._id,
+        message: "Subject updated successfully"
+      })
     })
   } catch (error) {
     res.json({
+      subject,
       message: error.message
     })
   }
@@ -60,15 +66,12 @@ const updateSubject = async (req, res) => {
 const deleteSubject = async (req, res) => {
   try {
     const { id } = req.params
-    
+
     await Subject.findByIdAndDelete(id, (err) => {
       if (err) throw new Error(err)
-    })
-    // if (!subject) {
-    //   throw new Error("No such subject exists")
-    // }
-    res.json({
-      message: "successfully deleted subject"
+      res.json({
+        message: "successfully deleted subject"
+      })
     })
   } catch (error) {
     res.json({
@@ -78,7 +81,53 @@ const deleteSubject = async (req, res) => {
 }
 
 
+/**
+ * get all available subjects
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getAllSubjects = async (req, res) => {
+  try {
+    await Subject.find({}, (err, subjects) => {
+      if (err) throw new Error(err);
+      res.json({
+        subjects,
+        message: "All subjects"
+      })
+    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
+/**
+ * get a lesson by id
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getSubject = async (req, res) => {
+  try {
+    const { id } = req.params
+    await Subject.findById(id, (err, subject) => {
+      if (err) throw new Error(err);
+      res.json({
+        subject,
+        message: "subject"
+      })
+    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
+
 module.exports = {
+  getSubject,
+  getAllSubjects,
   createSubject,
   updateSubject,
   deleteSubject

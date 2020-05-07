@@ -7,9 +7,6 @@ const CategorySchema = new mongoose.Schema({
   },
   subjects: {
     type: Array
-  },
-  subjects: {
-    type: Array,
   }
 })
 

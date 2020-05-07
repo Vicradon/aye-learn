@@ -14,7 +14,8 @@ require("dotenv").config()
 
 mongoose.connect("mongodb://localhost/aye-learn", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false 
 }).then(() => {
   init()
     .then(() => console.log("connected to mongo"))
