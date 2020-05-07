@@ -8,14 +8,17 @@ const Category = require("../models/category");
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params
-    const { newName } = req.body
+    const { newName, newSubjects } = req.body
     const exists = Category.findById(id)
 
     if (!exists) {
       throw new Error("The provided id doesn't map to a category")
     }
+    const prevSubjects = await Category.findById(id, { projection: { subject: 1, _id: 0 } }).toArray((err, items) => {
+      if (err) throw new Error("An error occured")
+    });
 
-    await Category.findByIdAndUpdate(id, { name: newName }, (err) => {
+    await Category.findByIdAndUpdate(id, { name: newName, subjects: [...prevSubjects, newSubjects] }, (err) => {
       if (err) throw new Error("An error occured")
     })
 
@@ -30,19 +33,6 @@ const updateCategory = async (req, res) => {
   }
 }
 
-/**
- * Deletes a subject from a category
- * @param {*} req 
- * @param {*} res 
- */
-const deleteSubject = async (req, res) => {
-  try {
-
-  } catch (error) {
-
-  }
-}
-
 
 /**
  * Deletes a given category
@@ -51,9 +41,21 @@ const deleteSubject = async (req, res) => {
  */
 const deleteCategory = async (req, res) => {
   try {
+    const { id } = req.params
 
+    const category = Category.findByIdAndDelete(id, (err) => {
+      if (err) throw new Error(err)
+    })
+    if (!category) {
+      throw new Error("No such category exists")
+    }
+    res.json({
+      message: "successfully deleted category"
+    })
   } catch (error) {
-
+    res.json({
+      message: error.message
+    })
   }
 }
 

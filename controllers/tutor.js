@@ -41,13 +41,12 @@ const getTutor = async (req, res) => {
  */
 const removeTutorRights = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete({
+    await User.findByIdAndDelete({
       _id: req.params.id,
     }, (err, user) => {
       if (err) console.error(err)
     });
     res.json({
-      user,
       message: "Remove tutor rights successfully"
     })
   } catch (error) {

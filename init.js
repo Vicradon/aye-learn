@@ -19,43 +19,43 @@ const init = () => {
         admin.token = token
         admin.save((err) => {
           if (err) reject(err);
-          resolve(() => {
-            return new Promise((resolve, reject) => {
-              Category.findOne({ name: 'primary' }, (err, cate) => {
-                if (err) reject(err);
-                if (!cate) {
-                  const admin = new Category({
-                    name: "Primary",
-                    subjects: []
-                  });
-                }
-              });
-              Category.findOne({ name: 'JSS' }, (err, cate) => {
-                if (err) reject(err);
-                if (!cate) {
-                  const admin = new Category({
-                    name: "JSS",
-                    subjects: []
-                  });
-                }
-              });
-              Category.findOne({ name: 'SSS' }, (err, cate) => {
-                if (err) reject(err);
-                if (!cate) {
-                  const admin = new Category({
-                    name: "SSS",
-                    subjects: []
-                  });
-                }
-              });
-            })
-          })
+          resolve()
         })
       }
       else {
         resolve();
       }
     })
+    Category.findOne({ name: 'Primary' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "Primary",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
+    Category.findOne({ name: 'JSS' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "JSS",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
+    Category.findOne({ name: 'SSS' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "SSS",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
   })
 }
 

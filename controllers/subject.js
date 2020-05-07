@@ -8,7 +8,7 @@ const createSubject = async (req, res) => {
   try {
     const name = req.params.name
     const alreadyExist = Subject.findOne({ name })
-    if (!alreadyExist) {
+    if (alreadyExist) {
       throw new Error("This subject name is already available")
     }
     const subject = new Subject({ name })
@@ -61,12 +61,12 @@ const deleteSubject = async (req, res) => {
   try {
     const { id } = req.params
     
-    const subject = Subject.findByIdAndDelete(id, (err) => {
+    await Subject.findByIdAndDelete(id, (err) => {
       if (err) throw new Error(err)
     })
-    if (!subject) {
-      throw new Error("No such subject exists")
-    }
+    // if (!subject) {
+    //   throw new Error("No such subject exists")
+    // }
     res.json({
       message: "successfully deleted subject"
     })

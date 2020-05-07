@@ -5,6 +5,7 @@ const authRouter = require("./routes/auth");
 const categoryRouter = require("./routes/categories");
 const subjectRouter = require("./routes/subjects");
 const tutorRouter = require("./routes/tutors");
+const lessonRouter = require("./routes/lessons");
 const tokenHasExpired = require("./middleware/tokenHasExpired")
 const allowIfLoggedIn = require("./middleware/allowIfLoggedIn")
 const hasAccessTo = require("./middleware/hasAccessTo")
@@ -37,6 +38,7 @@ app.use(allowIfLoggedIn)
 app.use("/categories", categoryRouter);
 app.use("/subjects", subjectRouter);
 app.use("/tutors", tutorRouter);
+app.use("/lessons", lessonRouter);
 
 // app.error(function (err, req, res, next) {
 //   if (err instanceof NotFound) {
