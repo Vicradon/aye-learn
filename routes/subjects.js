@@ -1,8 +1,17 @@
 const { Router } = require("express");
-const subjectController = require("../controllers/category");
+const subjectController = require("../controllers/subject");
 const router = Router();
 
-router.post("/create", subjectController.createSubject);
+// const enhancedRouter = (router, controller) => {
+//   controller.allowIfLoggedin;
+//   controller.userhasAccess('createAny', 'subject');
+// }
+
+router.post("/create/:name",
+  // subjectController.allowIfLoggedin,
+  // subjectController.userhasAccess('createAny', 'subject'),
+  subjectController.createSubject
+);
 
 router.patch('/:id', subjectController.updateSubject)
 

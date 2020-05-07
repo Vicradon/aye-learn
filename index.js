@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const userRouter = require("./routes/users");
 const categoryRouter = require("./routes/categories");
+const subjectRouter = require("./routes/subjects");
 const tokenHasExpired = require("./middleware/tokenHasExpired")
 require("dotenv").config()
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", userRouter);
 app.use("/categories", categoryRouter);
+app.use("/subjects", subjectRouter);
 
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");

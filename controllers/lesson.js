@@ -1,5 +1,5 @@
 /**
- * 
+ * Create a new lesson
  * @param {*} req 
  * @param {*} res 
  */
@@ -12,7 +12,7 @@ const createLesson = async (req, res) => {
 }
 
 /**
- * 
+ * update a lesson by id
  * @param {*} req 
  * @param {*} res 
  */
@@ -26,7 +26,7 @@ const updateLesson = async (req, res) => {
 
 
 /**
- * 
+ * get all available lessons
  * @param {*} req 
  * @param {*} res 
  */
@@ -39,7 +39,7 @@ const getAllLessons = async (req, res) => {
 }
 
 /**
- * 
+ * get a lesson by id
  * @param {*} req 
  * @param {*} res 
  */
@@ -54,7 +54,7 @@ const getLesson = async (req, res) => {
 
 
 /**
- * 
+ * Delete a lesson by id
  * @param {*} req 
  * @param {*} res 
  */

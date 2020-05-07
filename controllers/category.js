@@ -1,20 +1,19 @@
 const Category = require("../models/category");
-const Subject = require("../models/Subject");
 const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
 
-const getSubjectById = async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const subject = await Subject.findById(id);
-    if (subject === null) {
-      res.status(404).json({ message: "Subject not found" })
-    }
-    res.subject = subject
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-  next()
-}
+// const getSubjectById = async (req, res, next) => {
+//   try {
+//     const { id } = req.params
+//     const subject = await Subject.findById(id);
+//     if (subject === null) {
+//       res.status(404).json({ message: "Subject not found" })
+//     }
+//     res.subject = subject
+//   } catch (error) {
+//     res.status(500).json({ message: error.message })
+//   }
+//   next()
+// }
 
 
 /**
