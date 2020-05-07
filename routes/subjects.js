@@ -1,21 +1,23 @@
 const { Router } = require("express");
 const subjectController = require("../controllers/subject");
 const router = Router();
+const hasAccessTo = require('../controllers/utils/hasAccessTo')
 
-// const enhancedRouter = (router, controller) => {
-//   controller.allowIfLoggedin;
-//   controller.userhasAccess('createAny', 'subject');
-// }
 
 router.post("/create/:name",
-  // subjectController.allowIfLoggedin,
-  // subjectController.userhasAccess('createAny', 'subject'),
+  hasAccessTo('createAny', 'subject'),
   subjectController.createSubject
 );
 
-router.patch('/:id', subjectController.updateSubject)
+router.patch('/:id',
+  hasAccessTo('updateAny', 'subject'),
+  subjectController.updateSubject
+)
 
-router.delete('/:id', subjectController.deleteSubject)
+router.delete('/:id',
+  hasAccessTo('deleteAny', 'subject'),
+  subjectController.deleteSubject
+)
 
 module.exports = router;
 

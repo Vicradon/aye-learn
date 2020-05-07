@@ -8,8 +8,8 @@ const CategorySchema = new mongoose.Schema({
   subjects: {
     type: Array
   },
-  "number of subjects": {
-    type: Number,
+  subjects: {
+    type: Array,
   }
 })
 

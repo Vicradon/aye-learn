@@ -1,43 +1,4 @@
 const Category = require("../models/category");
-const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
-
-// const getSubjectById = async (req, res, next) => {
-//   try {
-//     const { id } = req.params
-//     const subject = await Subject.findById(id);
-//     if (subject === null) {
-//       res.status(404).json({ message: "Subject not found" })
-//     }
-//     res.subject = subject
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
-//   next()
-// }
-
-
-/**
- * Create a subject, done by admins only
- * @param {*} req 
- * @param {*} res 
- */
-const createCategory = async (req, res) => {
-  try {
-    // const { category, subject } = req.params
-    // const newSubject = await Subject.create({
-    //   category,
-    //   subject
-    // })
-    // res.json({
-    //   newSubject,
-    //   message: `Subject created under category ${category}`
-    // });
-  } catch (error) {
-    res.json({
-      message: error.message
-    })
-  }
-}
 
 /**
  * update a given subject under a category
@@ -46,11 +7,26 @@ const createCategory = async (req, res) => {
  */
 const updateCategory = async (req, res) => {
   try {
-    const { category, id } = req.params
-    const subject = await getSubjectById(req, res)
+    const { id } = req.params
+    const { newName } = req.body
+    const exists = Category.findById(id)
+
+    if (!exists) {
+      throw new Error("The provided id doesn't map to a category")
+    }
+
+    await Category.findByIdAndUpdate(id, { name: newName }, (err) => {
+      if (err) throw new Error("An error occured")
+    })
+
+    res.status(201).json({
+      message: "Successfully created the subject"
+    })
 
   } catch (error) {
-
+    res.json({
+      message: error.message
+    })
   }
 }
 
@@ -85,7 +61,6 @@ const deleteCategory = async (req, res) => {
 
 
 module.exports = {
-  createCategory,
   updateCategory,
   deleteCategory
 };

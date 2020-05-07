@@ -4,6 +4,14 @@ const SubjectSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ['Primary', 'JSS', 'SSS']
+  },
+  lessons: {
+    type: Array
   }
 })
 

@@ -1,5 +1,6 @@
 'use strict';
 const User = require('./models/user')
+const Category = require('./models/category')
 const jwt = require('jsonwebtoken')
 
 const init = () => {
@@ -24,6 +25,8 @@ const init = () => {
         resolve();
       }
     })
+    Category.find({})
+
   })
 };
 module.exports = init
