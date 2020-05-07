@@ -1,3 +1,4 @@
 module.exports = {
-  secret: 'worldisfullofdevelopers'
+  adminAccountEmail: 'admin@email.com',
+  adminAccountPassword: 'testpassword'
 };

@@ -7,14 +7,16 @@ const Subject = require('../models/subject')
 const createSubject = async (req, res) => {
   try {
     const name = req.params.name
-    const subject = Subject.create({name})
+    const subject = new Subject({name})
     await subject.save()
-    console.log(44)
+    
     res.status(201).json({
       message: "Successfully created the subject"
     })
   } catch (error) {
-    
+    res.json({
+      message: error.message
+    })
   }
 }
 

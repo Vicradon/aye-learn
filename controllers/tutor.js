@@ -1,4 +1,6 @@
 const Tutor = require('../models/tutor')
+const roles = require('../roles')
+
 
 const getAllTutors = async (req, res) => {
   try {
@@ -39,9 +41,19 @@ const getTutor = async (req, res) => {
  */
 const removeTutorRights = async (req, res) => {
   try {
-
+    const user = await User.findByIdAndDelete({
+      _id: req.params.id,
+    }, (err, user) => {
+      if (err) console.error(err)
+    });
+    res.json({
+      user,
+      message: "Remove tutor rights successfully"
+    })
   } catch (error) {
-
+    res.json({
+      message: error.message
+    })
   }
 }
 

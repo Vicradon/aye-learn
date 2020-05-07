@@ -8,13 +8,16 @@ const tutorRouter = require("./routes/tutors");
 const tokenHasExpired = require("./middleware/tokenHasExpired")
 const allowIfLoggedIn = require("./middleware/allowIfLoggedIn")
 const hasAccessTo = require("./middleware/hasAccessTo")
+const init = require('./init')
 require("dotenv").config()
 
 mongoose.connect("mongodb://localhost/aye-learn", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
-  console.log("connected to mongo");
+  init()
+    .then(() => console.log("connected to mongo"))
+    .catch(err => console.error(err))
 });
 
 
@@ -29,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRouter);
 
 app.use(allowIfLoggedIn)
-app.use(hasAccessTo)
+// app.use(hasAccessTo)
 
 app.use("/categories", categoryRouter);
 app.use("/subjects", subjectRouter);
@@ -48,6 +51,10 @@ app.use("/tutors", tutorRouter);
 //   res.status(500).send('Something broke!')
 // })
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
-});
+// init()
+//   .then((data) => {
+// console.log(data)
+app.listen(process.env.PORT);
+console.log('Server running at http://localhost:' + process.env.PORT + '/');
+  // });
+

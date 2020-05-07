@@ -7,6 +7,10 @@ const signup = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
+    if (role === 'admin'){
+      throw new Error("You cannot sign up as an admin")
+    }
+
     const user = await User.create({
       email,
       password,
@@ -27,7 +31,6 @@ const signup = async (req, res) => {
     res.json({
       message: error.message
     })
-    next(error)
   }
 }
 
