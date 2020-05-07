@@ -1,15 +1,15 @@
-const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
+const Tutor = require('../models/tutor')
 
 const getAllTutors = async (req, res) => {
   try {
-    const user = await User.find({});
+    const tutors = await Tutor.find({});
     res.json({
-      user,
-      message: "All users listed"
+      tutors,
+      message: "All tutors listed"
     });
   } catch (error) {
     res.json({
-      message: e.message
+      message: error.message
     })
   }
 }
