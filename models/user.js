@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema({
     default: 'student',
     enum: ['student', 'tutor', 'admin']
   },
+  registeredSubjects: {
+    type: Array
+  },
   token: {
     type: String
   }
