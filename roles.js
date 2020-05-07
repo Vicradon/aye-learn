@@ -27,13 +27,11 @@ let grantList = [
 
   { role: 'student', resource: 'category', action: 'read:any', attributes: '*' },
   { role: 'student', resource: 'subject', action: 'read:any', attributes: '*' },
-  { role: 'student', resource: 'tutors', action: 'read:any', attributes: '*' },
+  { role: 'student', resource: 'tutor', action: 'read:any', attributes: '*' },
 ];
 const ac = new AccessControl(grantList);
 
 ac.grant('admin').extend('student');
 ac.grant('tutor').extend('student');
-
-ac.setGrants(grantList);
 
 module.exports = ac

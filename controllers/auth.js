@@ -7,13 +7,17 @@ const signup = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
+    if (role === 'admin'){
+      throw new Error("You cannot sign up as an admin")
+    }
+
     const user = await User.create({
       email,
       password,
       role
     });
 
-    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
     user.token = token
@@ -27,7 +31,6 @@ const signup = async (req, res) => {
     res.json({
       message: error.message
     })
-    next(error)
   }
 }
 
@@ -46,9 +49,10 @@ const login = async (req, res) => {
       throw new Error("User not found");
     }
     if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ user: user._id  }, process.env.JWT_SECRET, {
         expiresIn: "1d"
       });
+      
       await User.findByIdAndUpdate(user._id, { token })
       res.status(200).json({
         user,

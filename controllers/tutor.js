@@ -1,20 +1,22 @@
-const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
+const Tutor = require('../models/tutor')
+const roles = require('../roles')
 
-const getAll = async (req, res) => {
+
+const getAllTutors = async (req, res) => {
   try {
-    const user = await User.find({});
+    const tutors = await Tutor.find({});
     res.json({
-      user,
-      message: "All users listed"
+      tutors,
+      message: "All tutors listed"
     });
   } catch (error) {
     res.json({
-      message: e.message
+      message: error.message
     })
   }
 }
 
-const get = async (req, res) => {
+const getTutor = async (req, res) => {
   try {
     const user = await User.findOne({
       _id: req.params.id,
@@ -30,4 +32,63 @@ const get = async (req, res) => {
       message: e.message
     })
   }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const removeTutorRights = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete({
+      _id: req.params.id,
+    }, (err, user) => {
+      if (err) console.error(err)
+    });
+    res.json({
+      user,
+      message: "Remove tutor rights successfully"
+    })
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const registerSubject = async (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getSubjects = async (req, res) => {
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+
+
+module.exports = {
+  getAllTutors,
+  getTutor,
+  removeTutorRights,
+  registerSubject,
+  getSubjects
 }
