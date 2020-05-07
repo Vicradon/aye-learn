@@ -19,14 +19,45 @@ const init = () => {
         admin.token = token
         admin.save((err) => {
           if (err) reject(err);
-          resolve();
+          resolve(() => {
+            return new Promise((resolve, reject) => {
+              Category.findOne({ name: 'primary' }, (err, cate) => {
+                if (err) reject(err);
+                if (!cate) {
+                  const admin = new Category({
+                    name: "Primary",
+                    subjects: []
+                  });
+                }
+              });
+              Category.findOne({ name: 'JSS' }, (err, cate) => {
+                if (err) reject(err);
+                if (!cate) {
+                  const admin = new Category({
+                    name: "JSS",
+                    subjects: []
+                  });
+                }
+              });
+              Category.findOne({ name: 'SSS' }, (err, cate) => {
+                if (err) reject(err);
+                if (!cate) {
+                  const admin = new Category({
+                    name: "SSS",
+                    subjects: []
+                  });
+                }
+              });
+            })
+          })
         })
-      } else {
+      }
+      else {
         resolve();
       }
     })
-    Category.find({})
-
   })
-};
+}
+
+
 module.exports = init

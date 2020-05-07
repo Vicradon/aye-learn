@@ -58,8 +58,6 @@ const deleteCategory = async (req, res) => {
 }
 
 
-
-
 module.exports = {
   updateCategory,
   deleteCategory
