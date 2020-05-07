@@ -1,43 +1,4 @@
 const Category = require("../models/category");
-const { hasAccessTo, allowIfLoggedin } = require('./utils/rbac')
-
-// const getSubjectById = async (req, res, next) => {
-//   try {
-//     const { id } = req.params
-//     const subject = await Subject.findById(id);
-//     if (subject === null) {
-//       res.status(404).json({ message: "Subject not found" })
-//     }
-//     res.subject = subject
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
-//   next()
-// }
-
-
-/**
- * Create a subject, done by admins only
- * @param {*} req 
- * @param {*} res 
- */
-const createCategory = async (req, res) => {
-  try {
-    // const { category, subject } = req.params
-    // const newSubject = await Subject.create({
-    //   category,
-    //   subject
-    // })
-    // res.json({
-    //   newSubject,
-    //   message: `Subject created under category ${category}`
-    // });
-  } catch (error) {
-    res.json({
-      message: error.message
-    })
-  }
-}
 
 /**
  * update a given subject under a category
@@ -46,24 +7,25 @@ const createCategory = async (req, res) => {
  */
 const updateCategory = async (req, res) => {
   try {
-    const { category, id } = req.params
-    const subject = await getSubjectById(req, res)
+    const { id } = req.params
+    const { newName, newSubjects } = req.body
 
+    let prevSubjects = await Category.findById(id).subjects
+
+    if (!prevSubjects){
+      prevSubjects = []
+    }
+
+    await Category.findByIdAndUpdate(id, { name: newName, subjects: [...prevSubjects, newSubjects] }, (err) => {
+      if (err) throw new Error(err)
+      res.status(201).json({
+        message: "Successfully modified the category"
+      })
+    })
   } catch (error) {
-
-  }
-}
-
-/**
- * Deletes a subject from a category
- * @param {*} req 
- * @param {*} res 
- */
-const deleteSubject = async (req, res) => {
-  try {
-
-  } catch (error) {
-
+    res.json({
+      message: error.message
+    })
   }
 }
 
@@ -75,17 +37,23 @@ const deleteSubject = async (req, res) => {
  */
 const deleteCategory = async (req, res) => {
   try {
+    const { id } = req.params
 
+    await Category.findByIdAndDelete(id, (err) => {
+      if (err) throw new Error(err)
+      res.json({
+        message: "successfully deleted category"
+      })
+    })
   } catch (error) {
-
+    res.json({
+      message: error.message
+    })
   }
 }
 
 
-
-
 module.exports = {
-  createCategory,
   updateCategory,
   deleteCategory
 };

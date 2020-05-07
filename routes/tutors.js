@@ -24,10 +24,11 @@ router.get('/:id',
 /**
  * Remove a tutor's rights
  */
-router.delete('/:id',
-  hasAccessTo('deleteAny', 'tutor'),
+router.patch('/:id',
+  hasAccessTo('updateAny', 'tutor_rights'),
   tutorController.removeTutorRights
 )
+
 
 /**
  * Register to take a subject

@@ -1,5 +1,6 @@
 'use strict';
 const User = require('./models/user')
+const Category = require('./models/category')
 const jwt = require('jsonwebtoken')
 
 const init = () => {
@@ -18,12 +19,45 @@ const init = () => {
         admin.token = token
         admin.save((err) => {
           if (err) reject(err);
-          resolve();
+          resolve()
         })
-      } else {
+      }
+      else {
         resolve();
       }
     })
+    Category.findOne({ name: 'Primary' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "Primary",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
+    Category.findOne({ name: 'JSS' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "JSS",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
+    Category.findOne({ name: 'SSS' }, (err, category) => {
+      if (err) reject(err);
+      if (!category) {
+        const category = new Category({
+          name: "SSS",
+          subjects: []
+        });
+        category.save((err) => { if (err) reject(err); resolve() })
+      } else { resolve() }
+    });
   })
-};
+}
+
+
 module.exports = init

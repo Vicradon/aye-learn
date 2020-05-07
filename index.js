@@ -5,6 +5,7 @@ const authRouter = require("./routes/auth");
 const categoryRouter = require("./routes/categories");
 const subjectRouter = require("./routes/subjects");
 const tutorRouter = require("./routes/tutors");
+const lessonRouter = require("./routes/lessons");
 const tokenHasExpired = require("./middleware/tokenHasExpired")
 const allowIfLoggedIn = require("./middleware/allowIfLoggedIn")
 const hasAccessTo = require("./middleware/hasAccessTo")
@@ -13,7 +14,8 @@ require("dotenv").config()
 
 mongoose.connect("mongodb://localhost/aye-learn", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false 
 }).then(() => {
   init()
     .then(() => console.log("connected to mongo"))
@@ -37,6 +39,7 @@ app.use(allowIfLoggedIn)
 app.use("/categories", categoryRouter);
 app.use("/subjects", subjectRouter);
 app.use("/tutors", tutorRouter);
+app.use("/lessons", lessonRouter);
 
 // app.error(function (err, req, res, next) {
 //   if (err instanceof NotFound) {

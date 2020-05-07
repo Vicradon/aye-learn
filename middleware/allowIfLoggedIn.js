@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 const allowIfLoggedin = async (req, res, next) => {
   try {
@@ -8,13 +9,13 @@ const allowIfLoggedin = async (req, res, next) => {
     }
 
     if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
         if (err) {
           return res.status(403).json({
             error: "You're forbidden from accessing this route"
           });
         }
-        req.user = user.user;
+        req.user = await User.findById(user.user);
         next();
       })
     } else {
