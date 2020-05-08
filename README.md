@@ -9,6 +9,10 @@ ADMINPASSWORD = adminpassword
 https://aye-learn.herokuapp.com
 
 ## API Docs
-<iframe src = "https://documenter.getpostman.com/view/9654495/Szme6KL8?version=latest"></iframe>
+
+<div>
+  <iframe src = "https://documenter.getpostman.com/view/9654495/Szme6KL8?version=latest"></iframe>
+</div>
+
 
 
