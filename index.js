@@ -23,7 +23,7 @@ mongoose.connect(process.env.DB_URL, {
 });
 
 
-
+app.get('/', (_, res) => res.json({message: "There's nothing here"}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -41,23 +41,7 @@ app.use("/api/v1/subjects", subjectRouter);
 app.use("/api/v1/tutors", tutorRouter);
 app.use("/api/v1/lessons", lessonRouter);
 
-// app.error(function (err, req, res, next) {
-//   if (err instanceof NotFound) {
-//     res.send('404.jade');
-//   } else {
-//     next(err);
-//   }
-// });
 
-// app.use(function (err, req, res, next) {
-//   console.error(err.stack)
-//   res.status(500).send('Something broke!')
-// })
 
-// init()
-//   .then((data) => {
-// console.log(data)
 app.listen(process.env.PORT);
 console.log('Server running at http://localhost:' + process.env.PORT + '/');
-  // });
-
