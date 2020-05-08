@@ -1,4 +1,4 @@
-const roles = require('../../roles')
+const roles = require('../../helpers/roles')
 const hasAccessTo = function (action, resource) {
   return async (req, res, next) => {
     try {
