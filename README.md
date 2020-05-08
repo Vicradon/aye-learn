@@ -5,4 +5,7 @@ An API of an online-tutoring app
 ADMINEMAIL = admin@email.com
 ADMINPASSWORD = adminpassword
 
+## API root
+https://aye-learn.herokuapp.com
+
 
