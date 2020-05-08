@@ -30,15 +30,15 @@ app.use(express.urlencoded({ extended: true }));
  * The order of these middleswares are important
  * The auth route is public
  */
-app.use("/api/v1/auth", authRouter);
+app.use('/api/v1/auth', authRouter);
 
 app.use(allowIfLoggedIn)
 // app.use(hasAccessTo)
 
-app.use("/api/v1/categories", categoryRouter);
-app.use("/api/v1/subjects", subjectRouter);
-app.use("/api/v1/tutors", tutorRouter);
-app.use("/api/v1/lessons", lessonRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/subjects', subjectRouter);
+app.use('/api/v1/tutors', tutorRouter);
+app.use('/api/v1/lessons', lessonRouter);
 
 
 
