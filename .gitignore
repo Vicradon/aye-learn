@@ -115,3 +115,5 @@ dist
 .yarn/build-state.yml
 .pnp.*
 removePythonComments.js
+aye-learn-docs.json
+json-to-md.js
