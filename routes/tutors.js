@@ -33,8 +33,8 @@ router.patch('/:id',
 /**
  * Register to take a subject
  */
-router.post('/:id/:subjectId',
-  hasAccessTo('createAny', 'registered_subject'),
+router.patch('/:id/:subjectId',
+  hasAccessTo('updateOwn', 'profile'),
   tutorController.registerSubject
 )
 

@@ -12,7 +12,7 @@ const hasAccessTo = require("./middleware/hasAccessTo")
 const init = require('./init')
 require("dotenv").config()
 
-mongoose.connect("mongodb://localhost/aye-learn", {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false 
@@ -31,15 +31,15 @@ app.use(express.urlencoded({ extended: true }));
  * The order of these middleswares are important
  * The auth route is public
  */
-app.use("/auth", authRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.use(allowIfLoggedIn)
 // app.use(hasAccessTo)
 
-app.use("/categories", categoryRouter);
-app.use("/subjects", subjectRouter);
-app.use("/tutors", tutorRouter);
-app.use("/lessons", lessonRouter);
+app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/subjects", subjectRouter);
+app.use("/api/v1/tutors", tutorRouter);
+app.use("/api/v1/lessons", lessonRouter);
 
 // app.error(function (err, req, res, next) {
 //   if (err instanceof NotFound) {
