@@ -6,9 +6,8 @@ const categoryRouter = require("./routes/categories");
 const subjectRouter = require("./routes/subjects");
 const tutorRouter = require("./routes/tutors");
 const lessonRouter = require("./routes/lessons");
-const tokenHasExpired = require("./middleware/tokenHasExpired")
+// const tokenHasExpired = require("./middleware/tokenHasExpired")
 const allowIfLoggedIn = require("./middleware/allowIfLoggedIn")
-const hasAccessTo = require("./middleware/hasAccessTo")
 const init = require('./init')
 require("dotenv").config()
 
