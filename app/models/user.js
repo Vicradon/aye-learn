@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema({
     default: 'student',
     enum: ['student', 'tutor', 'admin']
   },
-  registeredSubjects: {
-    type: Array
-  },
+  registeredSubjects: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }
+  ],
   token: {
     type: String
   }

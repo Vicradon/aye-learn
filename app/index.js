@@ -14,7 +14,7 @@ require("dotenv").config()
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false 
+  useFindAndModify: false
 }).then(() => {
   init()
     .then(() => console.log("connected to mongo"))
@@ -22,7 +22,11 @@ mongoose.connect(process.env.DB_URL, {
 });
 
 
-app.get('/', (_, res) => res.json({message: "There's nothing here"}))
+app.get('/', (_, res) => res.json({
+  message: `So you are looking for a website eh? Too bad, 
+  this is just a json file and other stuff are just API endpoints. 
+  Use an API tool to sign up here https://aye-learn.herokuapp.com/api/v1/auth/signup`
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
