@@ -6,9 +6,8 @@ const categoryRouter = require("./routes/categories");
 const subjectRouter = require("./routes/subjects");
 const tutorRouter = require("./routes/tutors");
 const lessonRouter = require("./routes/lessons");
-const tokenHasExpired = require("./middleware/tokenHasExpired")
+// const tokenHasExpired = require("./middleware/tokenHasExpired")
 const allowIfLoggedIn = require("./middleware/allowIfLoggedIn")
-const hasAccessTo = require("./middleware/hasAccessTo")
 const init = require('./init')
 require("dotenv").config()
 
@@ -31,15 +30,15 @@ app.use(express.urlencoded({ extended: true }));
  * The order of these middleswares are important
  * The auth route is public
  */
-app.use("/api/v1/auth", authRouter);
+app.use('/api/v1/auth', authRouter);
 
 app.use(allowIfLoggedIn)
 // app.use(hasAccessTo)
 
-app.use("/api/v1/categories", categoryRouter);
-app.use("/api/v1/subjects", subjectRouter);
-app.use("/api/v1/tutors", tutorRouter);
-app.use("/api/v1/lessons", lessonRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/subjects', subjectRouter);
+app.use('/api/v1/tutors', tutorRouter);
+app.use('/api/v1/lessons', lessonRouter);
 
 
 
