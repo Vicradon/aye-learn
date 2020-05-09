@@ -1,4 +1,5 @@
 const Subject = require('../models/subject')
+const Category = require('../models/category')
 /**
  * Create a new subject and link to a category
  * @param {*} req 
@@ -12,14 +13,26 @@ const createSubject = async (req, res) => {
       if (err) throw new Error(err)
       exists = data
     })
+    await Category.findOne({ name: category }, (err, data) => {
+      if (err) throw new Error(err)
+      if (!data) {
+        Category.create({ name: category }, (err) => { if (err) throw new Error(err) })
+      }
+    })
 
     if (exists) {
       throw new Error("This subject name is already available")
     }
     const subject = new Subject({ name, category })
 
-    await subject.save((err) => {
+    await subject.save((err, data) => {
       if (err) throw new Error(err)
+      const id = data._id
+      Category.findOne({ name: category }, (err, data) => {
+        if (err) throw new Error(err)
+        data.subjects.push(id)
+        data.save((err) => { if (err) throw new Error(err) })
+      })
       res.status(201).json({
         subject,
         message: "Successfully created the subject"
@@ -67,8 +80,19 @@ const deleteSubject = async (req, res) => {
   try {
     const { id } = req.params
 
-    await Subject.findByIdAndDelete(id, (err) => {
+    await Subject.findByIdAndDelete(id, (err, subject) => {
       if (err) throw new Error(err)
+      let category;
+      if (subject) {
+        category = subject.category
+      }
+      Category.findOne({ name: category }, (err, data) => {
+        if (err) throw new Error(err)
+        const index = data.subjects.indexOf(id)
+        data.subjects.splice(index, 1)
+        data.save((err) => { if (err) throw new Error(err) })
+      })
+
       res.json({
         message: "successfully deleted subject"
       })

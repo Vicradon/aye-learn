@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Subject = require("../models/subject");
 
 /**
  * Create a new category and link to a category
@@ -93,7 +94,7 @@ const updateCategory = async (req, res) => {
 
     let prevcategorys = await Category.findById(id).categorys
 
-    if (!prevcategorys){
+    if (!prevcategorys) {
       prevcategorys = []
     }
 
@@ -120,10 +121,12 @@ const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params
 
-    await Category.findByIdAndDelete(id, (err) => {
+    await Category.findByIdAndDelete(id, (err, data) => {
       if (err) throw new Error(err)
+      const subjectIds = data.subjects;
+      Subject.deleteMany({ _id: subjectIds }, (err) => { if (err) throw new Error(err) })
       res.json({
-        message: "successfully deleted category"
+        message: "successfully deleted category and linked subjects"
       })
     })
   } catch (error) {

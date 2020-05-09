@@ -10,9 +10,12 @@ const SubjectSchema = new mongoose.Schema({
     required: true,
     enum: ['Primary', 'JSS', 'SSS']
   },
-  lessons: {
-    type: Array
-  }
+  lessons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lesson'
+    }
+  ]
 })
 
 const Subject = mongoose.model('Subject', SubjectSchema)

@@ -5,9 +5,12 @@ const CategorySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  subjects: {
-    type: Array
-  }
+  subjects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject'
+    }
+  ]
 })
 
 const Category = mongoose.model('Category', CategorySchema)
