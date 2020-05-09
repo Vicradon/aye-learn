@@ -34,7 +34,7 @@ let grantList = [
 ];
 const ac = new AccessControl(grantList);
 
-ac.grant('admin').extend('student');
-ac.grant('tutor').extend('student');
+// ac.grant('admin').extend('student');
+// ac.grant('tutor').extend('student');
 
 module.exports = ac

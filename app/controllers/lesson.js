@@ -1,4 +1,6 @@
 const Lesson = require('../models/lesson')
+const Subject = require('../models/subject')
+
 /**
  * Create a new lesson
  * @param {*} req 
@@ -6,19 +8,36 @@ const Lesson = require('../models/lesson')
  */
 const createLesson = async (req, res) => {
   try {
-    const { name } = req.body
+    const { name, subject } = req.body
     let exist
-    await Lesson.findOne({ name }, (err, data) => {
+    let subjectExist
+    await Lesson.findOne({ name, subject }, (err, data) => {
       if (err) throw new Error(err)
       exists = data
+      Subject.findOne({ name: subject }, (err, subject) => {
+        if (err) throw new Error(err)
+        if (subject === null) subjectExist = false
+      })
     })
+
+    if (!subjectExist){
+      throw new Error("subject not available, please make sure you are posting a lesson to an available subject")
+    }
 
     if (exists) {
       throw new Error("This lesson name is already available, chose another and try again")
     }
-    const lesson = new Lesson({ name: name })
+
+    const lesson = new Lesson({ name, subject })
     await lesson.save((err, lessonData) => {
       if (err) throw new Error(err)
+      const id = lessonData._id
+      Subject.findOne({ name: subject }, (err, subject) => {
+        if (err) throw new Error(err)
+        subject.lessons.push(id)
+        subject.save((err) => { if (err) throw new Error(err) })
+      })
+
       res.status(201).json({
         lessonData,
         message: "Successfully created the lesson"
@@ -108,9 +127,18 @@ const getLesson = async (req, res) => {
 const deleteLesson = async (req, res) => {
   try {
     const { id } = req.params
+    const { subject } = req.body
 
     await Lesson.findByIdAndDelete(id, (err) => {
       if (err) throw new Error(err)
+
+      Subject.findOne({ name: subject }, (err, subject) => {
+        if (err) throw new Error(err)
+        const index = subject.lessons.indexOf(id)
+        subject.lessons.splice(index, 1)
+        subject.save((err) => { if (err) throw new Error(err) })
+      })
+
       res.json({
         message: "successfully deleted the lesson"
       })

@@ -83,6 +83,12 @@ const deleteSubject = async (req, res) => {
 
     await Subject.findByIdAndDelete(id, (err, subject) => {
       if (err) throw new Error(err)
+      const lessonIds = subject.lessons;
+      Subject.deleteMany({ _id: lessonIds }, (err) => { if (err) throw new Error(err) })
+      res.json({
+        message: "successfully deleted category and linked subjects"
+      })
+
       let category;
       if (subject) {
         category = subject.category
