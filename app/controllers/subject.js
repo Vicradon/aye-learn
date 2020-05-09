@@ -1,3 +1,4 @@
+const Lesson = require('../models/lesson')
 const Subject = require('../models/subject')
 const Category = require('../models/category')
 /**
