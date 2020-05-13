@@ -9,6 +9,11 @@ router.get("/",
   subjectController.getAllSubjects
 );
 
+router.get("/search?",
+  hasAccessTo('readAny', 'subject'),
+  subjectController.searchSubject
+);
+
 router.get("/:id",
   hasAccessTo('readAny', 'subject'),
   subjectController.getSubject

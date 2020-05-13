@@ -37,7 +37,7 @@ const createCategory = async (req, res) => {
 
 
 /**
- * get all available categorys
+ * get all available categories
  * @param {*} req 
  * @param {*} res 
  */
@@ -58,7 +58,7 @@ const getAllCategories = async (req, res) => {
 }
 
 /**
- * get a lesson by id
+ * get a category by id
  * @param {*} req 
  * @param {*} res 
  */
@@ -70,6 +70,31 @@ const getCategory = async (req, res) => {
       res.json({
         category,
         message: "category"
+      })
+    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
+
+
+/**
+ * get subjects in a category
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getSubjectsInCategory = async (req, res) => {
+  try {
+    const { id } = req.params
+    await Category.findById(id, (err, category) => {
+      if (err) throw new Error(err);
+      const subjects = category.subjects;
+      res.json({
+        subjects,
+        message: "Subjects in a category"
       })
     });
   } catch (error) {
@@ -140,6 +165,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
   createCategory,
   getCategory,
+  getSubjectsInCategory,
   getAllCategories,
   updateCategory,
   deleteCategory

@@ -6,42 +6,75 @@ const Subject = require('../models/subject')
  * @param {*} req 
  * @param {*} res 
  */
-const createLesson = async (req, res) => {
+const bookLesson = async (req, res) => {
   try {
-    const { name, subject } = req.body
-    let exist
-    let subjectExist
-    await Lesson.findOne({ name, subject }, (err, data) => {
-      if (err) throw new Error(err)
-      exists = data
-      Subject.findOne({ name: subject }, (err, subject) => {
+    const { name, subject, takenBy, startTime, endTime } = req.body
+
+    await Lesson.findOne({ name, subject, takenBy, startTime, endTime }, (err, data) => {
+      try {
+
+
+        let exists
+        let subjectExist
+
         if (err) throw new Error(err)
-        if (subject === null) subjectExist = false
-      })
-    })
+        exists = data
+        Subject.findOne({ name: subject }, (err, subject) => {
+          if (err) throw new Error(err)
+          if (subject === null) {
+            subjectExist = false
+          }
+          console.log(3);
 
-    if (!subjectExist){
-      throw new Error("subject not available, please make sure you are posting a lesson to an available subject")
-    }
+          if (subject) {
+            subjectExist = true
+          }
+        })
 
-    if (exists) {
-      throw new Error("This lesson name is already available, chose another and try again")
-    }
+        if (!startTime) {
+          throw new Error("Start time not provided")
+        }
 
-    const lesson = new Lesson({ name, subject })
-    await lesson.save((err, lessonData) => {
-      if (err) throw new Error(err)
-      const id = lessonData._id
-      Subject.findOne({ name: subject }, (err, subject) => {
-        if (err) throw new Error(err)
-        subject.lessons.push(id)
-        subject.save((err) => { if (err) throw new Error(err) })
-      })
+        if (!endTime) {
+          throw new Error("End time not provided")
+        }
+        console.log(subjectExist)
 
-      res.status(201).json({
-        lessonData,
-        message: "Successfully created the lesson"
-      })
+        if (!subjectExist) {
+          console.log(!subjectExist)
+          throw new Error("subject not available, please make sure you are posting a lesson to an available subject")
+        }
+
+        if (exists) {
+          throw new Error("This lesson name is already available, chose another and try again")
+        }
+
+      } catch (error) {
+        res.json({
+          message: error.message
+        })
+      }
+
+      const saveLesson = async () => {
+
+        const lesson = new Lesson({ name, subject, takenBy, startTime, endTime })
+        await lesson.save((err, lessonData) => {
+          if (err) throw new Error(err)
+          const id = lessonData._id
+          Subject.findOne({ name: subject }, (err, subject) => {
+            if (err) throw new Error(err)
+            subject.lessons.push(id)
+            subject.save((err) => { if (err) throw new Error(err) })
+          })
+
+          res.status(201).json({
+            lessonData,
+            message: "Successfully booked the lesson"
+          })
+        })
+      }
+      saveLesson()
+
     })
   } catch (error) {
     res.json({
@@ -155,5 +188,5 @@ module.exports = {
   getAllLessons,
   getLesson,
   deleteLesson,
-  createLesson
+  bookLesson
 }

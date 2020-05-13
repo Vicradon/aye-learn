@@ -17,6 +17,7 @@ let grantList = [
   { role: 'admin', resource: 'subject', action: 'read:any', attributes: '*' },
   { role: 'admin', resource: 'profile', action: 'read:any', attributes: '*' },
   { role: 'admin', resource: 'profile', action: 'update:any', attributes: '*' },
+  { role: 'admin', resource: 'tutor', action: 'delete:any', attributes: '*' },
 
   { role: 'tutor', resource: 'lesson', action: 'create:any', attributes: '*' },
   { role: 'tutor', resource: 'profile', action: 'update:own', attributes: '*' },
@@ -27,7 +28,9 @@ let grantList = [
   { role: 'tutor', resource: 'subject', action: 'read:any', attributes: '*' },
   { role: 'tutor', resource: 'profile', action: 'read:any', attributes: '*' },
   
-  { role: 'student', resource: 'profile', action: 'read:own', attributes: '*' },
+
+  { role: 'student', resource: 'lesson', action: 'create:any', attributes: '*' },
+  { role: 'student', resource: 'profile', action: 'read:any', attributes: '*' },
   { role: 'student', resource: 'category', action: 'read:any', attributes: '*' },
   { role: 'student', resource: 'subject', action: 'read:any', attributes: '*' },
   { role: 'student', resource: 'tutor', action: 'read:any', attributes: '*' },

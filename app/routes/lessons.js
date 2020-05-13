@@ -7,9 +7,9 @@ const router = Router();
 /**
  * Create a lesson
  */
-router.post('/new',
+router.post('/book',
   hasAccessTo('createAny', 'lesson'),
-  lessonController.createLesson
+  lessonController.bookLesson
 )
 
 /**
@@ -35,18 +35,6 @@ router.patch('/:id',
   hasAccessTo('updateAny', 'lesson'),
   lessonController.updateLesson
 )
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-//eyJ1c2VyIjoiNWViM2ZmNTc5MWQzMmUyZTYwYjI2OGJhIiwiaWF0IjoxNTg4OTM1OTYwLCJleHAiOjE1ODkwMjIzNjB9.
-//3guetliJilmFrTSj62N4VPYQSg-McQP2p7f-mV-80Eo
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-//eyJ1c2VyIjoiNWViM2ZmNTc5MWQzMmUyZTYwYjI2OGJhIiwiaWF0IjoxNTg4OTM1OTYwLCJleHAiOjE1ODkwMjIzNjB9.
-//3guetliJilmFrTSj62N4VPYQSg-McQP2p7f-mV-80Eo
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
-// yJ1c2VyIjoiNWViM2ZmNTc5MWQzMmUyZTYwYjI2OGJhIiwiaWF0IjoxNTg5MDI4OTY3LCJleHAiOjE1ODkxMTUzNjd9.
-// neo6gB7iy8zdViObPKIbXzZ2XBqxHPAnT_6ynVBIhdA
 
 /**
  * Delete a lesson from available lesson

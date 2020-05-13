@@ -8,7 +8,20 @@ const LessonSchema = new mongoose.Schema({
   subject: {
     type: String,
     required: true
+  },
+  startTime: {
+    type: Date,
+    required: true
+  },
+  endTime: {
+    type: Date,
+    required: true
+  },
+  takenBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
+
 });
 
 const Lesson = mongoose.model("Lesson", LessonSchema);

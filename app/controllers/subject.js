@@ -155,9 +155,36 @@ const getSubject = async (req, res) => {
   }
 }
 
+/**
+ * Search a subject by name
+ * @param {*} req 
+ * @param {*} res 
+ */
+const searchSubject = async (req, res) => {
+  try {
+    const { name: rawName } = req.query
+    const name = rawName.trim().split(' ').map(x => x.toLowerCase()).filter(Boolean).join(' ');
+
+    const searchTermRegex = new RegExp(name, 'gi');
+    await Subject.find({}, (err, subjects) => {
+      if (err) throw new Error(err);
+      const matchingSubjects = subjects
+        .filter(x => x.name.match(searchTermRegex))
+        .sort((a, b) => a.name.localeCompare(b.name))
+
+      res.json({ matchingSubjects, "message": "All matching subjects" })
+    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
 
 module.exports = {
   getSubject,
+  searchSubject,
   getAllSubjects,
   createSubject,
   updateSubject,

@@ -15,6 +15,12 @@ const UserSchema = new mongoose.Schema({
     required: true,
     set: setPassword
   },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
   role: {
     type: String,
     default: 'student',
