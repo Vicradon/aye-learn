@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Subject = require("../models/subject");
 
 /**
  * Create a new category and link to a category
@@ -36,7 +37,7 @@ const createCategory = async (req, res) => {
 
 
 /**
- * get all available categorys
+ * get all available categories
  * @param {*} req 
  * @param {*} res 
  */
@@ -57,7 +58,7 @@ const getAllCategories = async (req, res) => {
 }
 
 /**
- * get a lesson by id
+ * get a category by id
  * @param {*} req 
  * @param {*} res 
  */
@@ -69,6 +70,31 @@ const getCategory = async (req, res) => {
       res.json({
         category,
         message: "category"
+      })
+    });
+  } catch (error) {
+    res.json({
+      message: error.message
+    })
+  }
+}
+
+
+
+/**
+ * get subjects in a category
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getSubjectsInCategory = async (req, res) => {
+  try {
+    const { id } = req.params
+    await Category.findById(id, (err, category) => {
+      if (err) throw new Error(err);
+      const subjects = category.subjects;
+      res.json({
+        subjects,
+        message: "Subjects in a category"
       })
     });
   } catch (error) {
@@ -93,7 +119,7 @@ const updateCategory = async (req, res) => {
 
     let prevcategorys = await Category.findById(id).categorys
 
-    if (!prevcategorys){
+    if (!prevcategorys) {
       prevcategorys = []
     }
 
@@ -120,10 +146,12 @@ const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params
 
-    await Category.findByIdAndDelete(id, (err) => {
+    await Category.findByIdAndDelete(id, (err, data) => {
       if (err) throw new Error(err)
+      const subjectIds = data.subjects;
+      Subject.deleteMany({ _id: subjectIds }, (err) => { if (err) throw new Error(err) })
       res.json({
-        message: "successfully deleted category"
+        message: "successfully deleted category and linked subjects"
       })
     })
   } catch (error) {
@@ -137,6 +165,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
   createCategory,
   getCategory,
+  getSubjectsInCategory,
   getAllCategories,
   updateCategory,
   deleteCategory

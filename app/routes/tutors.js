@@ -13,6 +13,14 @@ router.get('/',
 )
 
 /**
+ * Search tutor by firstname
+ */
+router.get('/search?',
+  hasAccessTo('readAny', 'profile'),
+  tutorController.searchTutor
+)
+
+/**
  * Get single tutor
  */
 router.get('/:id',
@@ -24,8 +32,8 @@ router.get('/:id',
 /**
  * Remove a tutor's rights
  */
-router.patch('/:id',
-  hasAccessTo('updateAny', 'tutor_rights'),
+router.delete('/:id',
+  hasAccessTo('deleteAny', 'tutor'),
   tutorController.removeTutorRights
 )
 

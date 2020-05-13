@@ -4,13 +4,12 @@ const hasAccessTo = require('../controllers/utils/hasAccessTo')
 
 const router = Router();
 
-// example of a lesson: Radioactivity in subject chemistry under category sss
 /**
  * Create a lesson
  */
-router.post('/new',
+router.post('/book',
   hasAccessTo('createAny', 'lesson'),
-  lessonController.createLesson
+  lessonController.bookLesson
 )
 
 /**
@@ -36,7 +35,6 @@ router.patch('/:id',
   hasAccessTo('updateAny', 'lesson'),
   lessonController.updateLesson
 )
-
 
 /**
  * Delete a lesson from available lesson

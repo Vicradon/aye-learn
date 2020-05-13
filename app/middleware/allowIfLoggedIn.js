@@ -12,7 +12,7 @@ const allowIfLoggedin = async (req, res, next) => {
       jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
         if (err) {
           return res.status(403).json({
-            error: "You're forbidden from accessing this route"
+            error: "You have been logged out. Login to access this route"
           });
         }
         req.user = await User.findById(user.user);

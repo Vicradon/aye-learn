@@ -8,6 +8,11 @@ router.post('/new',
   categoryController.createCategory
 )
 
+router.get('/:id/subjects',
+  hasAccessTo('readAny', 'category'),
+  categoryController.getSubjectsInCategory
+)
+
 router.get('/:id',
   hasAccessTo('readAny', 'category'),
   categoryController.getCategory
