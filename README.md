@@ -31,7 +31,7 @@ The APIs use JWT for Bearer Token authentication
 *   201 - Created
 *   200 - Get OK
 
-The full version of the docs is hosted [here](https://documenter.getpostman.com/preview/9654495-a8cfd487-21ad-40d7-931a-597de683c89d?versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&top-bar=ffffff&right-sidebar=303030&highlight=ef5b25) on postman. Postman doesn't give the option for getting the docs as a markdown file.
+The full version of the docs is hosted [here](https://documenter.getpostman.com/view/9654495/Szmk2G5N?version=latest) on postman. Postman doesn't give the option for getting the docs as a markdown file.
 
 Here's a screenshot
 ![Screenshot of docs on postman)](https://user-images.githubusercontent.com/40396070/82116534-77c1cc00-9762-11ea-8d3b-c3f91f0f7e88.png)
