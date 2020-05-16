@@ -1,6 +1,8 @@
 # aye-learn
 An API of an online-tutoring app
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/df4ab70184be79b6b079)
+
 ## Admin Login Details
 ADMINEMAIL = admin@email.com
 
@@ -29,4 +31,10 @@ The APIs use JWT for Bearer Token authentication
 *   201 - Created
 *   200 - Get OK
 
-The full version of the docs is hosted [here](https://web.postman.co/collections/9654495-a8cfd487-21ad-40d7-931a-597de683c89d?version=latest&workspace=f3740251-2b57-4b8b-87a6-e0f675b3a77b) on postman. Postman doesn't give the option for getting the docs as a markdown file.
+The full version of the docs is hosted [here](https://documenter.getpostman.com/preview/9654495-a8cfd487-21ad-40d7-931a-597de683c89d?versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&top-bar=ffffff&right-sidebar=303030&highlight=ef5b25) on postman. Postman doesn't give the option for getting the docs as a markdown file.
+
+Here's a screenshot
+![Screenshot of docs on postman)](https://user-images.githubusercontent.com/40396070/82116534-77c1cc00-9762-11ea-8d3b-c3f91f0f7e88.png)
+
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/df4ab70184be79b6b079)
