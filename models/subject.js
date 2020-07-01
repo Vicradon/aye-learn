@@ -5,17 +5,10 @@ const SubjectSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  category: {
-    type: String,
-    required: true,
-    enum: ['Primary', 'JSS', 'SSS']
-  },
-  lessons: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Lesson'
-    }
-  ]
+  class: {
+    type: Stirng,
+    required: true
+  }
 })
 
 const Subject = mongoose.model('Subject', SubjectSchema)

@@ -1,10 +1,10 @@
-const roles = require('../../roles')
+const { roles } = require('./roles')
 
-exports.hasAccessTo = function(action, resource) {
+exports.grantAccess = (action, resource) => {
   return async (req, res, next) => {
     try {
-      const permission = roles.can(req.user.role)[action](resource)._.attributes.length
-      if (permission === 0) {
+      const permission = roles.can(req.user.role)[action](resource);
+      if (!permission.granted) {
         return res.status(401).json({
           error: "You don't have enough permission to perform this action"
         });

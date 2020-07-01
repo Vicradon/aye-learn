@@ -15,21 +15,12 @@ const UserSchema = new mongoose.Schema({
     required: true,
     set: setPassword
   },
-  firstName: {
-    type: String
-  },
-  lastName: {
-    type: String
-  },
   role: {
     type: String,
     default: 'student',
     enum: ['student', 'tutor', 'admin']
   },
-  registeredSubjects: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }
-  ],
-  token: {
+  accessToken: {
     type: String
   }
 });
